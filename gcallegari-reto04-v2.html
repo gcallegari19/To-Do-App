@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 04 - SummerHack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        body{
+            font-family: 'Poppins', sans-serif;
+            margin: 0px;
+            background: rgb(63,94,251);
+            background: linear-gradient(146deg, rgba(63,94,251,1) 0%, rgba(252,70,107,0.5046219171262255) 100%);
+        }
+        header, footer {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        section{
+            width: 100%;
+            height: calc(100vh - 120px);
+        }
+        h1, h2, h3, p{
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            color: #010101;
+            text-align: center;
+        }
+        #pantallaInicial{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #pantallaInicial p{
+            font-size: 40px;
+            font-family: "Barriecito", system-ui;
+            width: 60%;
+            margin-top: 40px;
+        }
+        #cargaTarea{
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #cargaTarea #formContainer{
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: rgb(237, 232, 232);
+            border-radius: 50% 10% / 10% 40%;
+            box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        label, input, select, button{
+            margin: 5px;
+        }
+    
+        #categoria{
+            margin-bottom: 20px;
+        }
+        #cargaTarea #formContainer input,
+        #cargaTarea #formContainer select,
+        #cargaTarea #formContainer textarea {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            padding: 5px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        #cargaTarea #formContainer input[type="checkbox"] {
+            width: 36px;
+            height: 36px;
+        }
+        #btnGuardar{
+            border-radius: 5px;
+            background-color: rgb(237, 232, 232);
+            padding: 5px;
+        }
+
+        #formContainer #btnCerrarFormulario {
+            position: absolute;
+            top: 8px;  
+            right: 15px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        #btnCerrarFormulario img{
+            padding-left: 6px;
+            width: 30px;
+            height: 30px;
+        }
+    
+        .personal {
+            background-color: #ffc0cb;
+        }
+
+        .trabajo {
+            background-color: #add8e6;
+        }
+
+        .hogar {
+            background-color: #90ee90;
+        }
+
+        .finanzas {
+            background-color: #f0e68c;
+        }
+        #listaTareas{
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .fab {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            width: 56px;
+            height: 56px;
+            background-color: #7730b6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        .fab i {
+            color: #fff;
+            font-size: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .acciones{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: row;
+        }
+        .icono-categoria{
+            width: 36px;
+            height: 36px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        #tareaContainer {
+            height: 100%;
+            overflow-y: auto; 
+            padding: 10px 20px;
+        }
+        .tarjetaTarea {
+            border-radius: 10px 100px / 120px;
+            box-shadow: 8px 8px 8px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            margin: 5px;
+            padding: 10px;
+        }
+        #descripcionTarea{
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position:relative;
+        }
+
+        a{
+            text-decoration: none;
+            color: #010101;
+        }
+        .detalleTarea{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+        }
+        .detalleDescripcionTarea{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .descripcionTareaContainer{
+            height: fit-content;
+            border-radius: 30% 10% 50% 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: fit-content;
+            overflow: hidden;
+            padding: 15px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            width: 80%;
+            margin: auto;
+            position: relative;
+        }
+        
+        .tachado {
+            text-decoration: line-through;
+        }
+        .btnEliminar{
+            width: 26px;
+            height: 26px;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #7730b6;
+            cursor: pointer;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .btnEliminar img{
+            padding-left: 4px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        #btnOk{
+            border: none;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: #7730b6;
+            cursor: pointer;
+            color: #fff;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        #btnCerrar{
+            border-radius: 2px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            border: none;
+            position: absolute;
+            top: 8px; 
+            right: 15px;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        #btnCerrar img {
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TO-DO App</h1>
+    </header>
+    <section id="pantallaInicial">
+        <h2>Hola! No tenes ninguna tarea</h2>
+        <p id="fraseMotivadora"></p>
+    </section>
+
+    <div class="fab">
+        <i id="btnMas">+</i>
+    </div>
+    
+     <section id="cargaTarea">
+        <div id="formContainer">
+            <label for="">Tarea:</label>
+            <input type="text" id="nombreTarea" placeholder="Ingresa la tarea">
+            <label for="">Categoria:</label>
+            <select name="categoria" id="categoria">
+                <option value="">Seleccione categoria</option>
+                <option value="personal">Personal</option>
+                <option value="trabajo">Trabajo</option>
+                <option value="hogar">Hogar</option>
+                <option value="finanzas">Finanzas</option>
+            </select>
+            <textarea id="descripcion" name="w3review" rows="4" cols="25" placeholder="Descripción de la tarea"></textarea>
+            <button id="btnGuardar">Guardar</button>
+            <button id="btnCerrarFormulario"><img src="https://i.postimg.cc/vZPBHkWQ/cerrar.png" alt=""></button>
+        </div>
+    </section>
+
+    <section id="listaTareas">
+        <div id="tareaContainer"></div>
+    </section>
+
+    <section id="descripcionTarea">
+    </section>
+
+    <footer>
+        <p>Copyright 2024 - Autora Gianni</p>
+    </footer>
+
+    <script>
+        // Instancias
+        let pantallaInicial = document.getElementById("pantallaInicial");
+        let fraseMotivadora = document.getElementById("fraseMotivadora");
+        let btnMas = document.getElementById("btnMas");
+        let cargaTarea = document.getElementById("cargaTarea");
+        let formContainer = document.getElementById("formContainer");
+        let nombreTarea = document.getElementById("nombreTarea");
+        let categoria = document.getElementById("categoria");
+        let descripcion = document.getElementById("descripcion");
+        let btnGuardar = document.getElementById("btnGuardar");
+        let btnCerrarFormulario = document.getElementById("btnCerrarFormulario");
+        let listaTareas = document.getElementById("listaTareas");
+        let tareaContainer = document.getElementById("tareaContainer");
+        let checkboxes = document.querySelectorAll('.check');
+        let btnEliminar = document.getElementById("btnEliminar");
+        let descripcionTarea = document.getElementById("descripcionTarea");
+        let btnOk = document.getElementById("btnOk");
+        let btnCerrar = document.getElementById("btnCerrar");
+        let descripcionTareaContainer = document.getElementById("descripcionTareaContainer");
+
+        // Array de frases motivadoras
+        let frasesMotivadoras = [
+            "La clave de la productividad es el orden", 
+            "Con orden y tiempo se encuentra el secreto de hacerlo todo, y de hacerlo bien",
+            "Un buen orden es la base de todas las cosas",
+            "Por cada minuto dedicado a la organización, se gana una hora",
+            "El orden no es un estilo de vida, es una forma de vida"
+        ]
+        // Array de tareas
+        let tareas = [];
+
+        const frasesAleatorias = ()=>{
+            let fraseRandom = Math.floor(Math.random() * frasesMotivadoras.length);
+            // Asigna la frase motivadora al elemento HTML
+            fraseMotivadora.textContent = frasesMotivadoras[fraseRandom];
+            }
+        frasesAleatorias();
+
+        // Evento de boton mas con pantallas a mostrar
+        btnMas.addEventListener("click", ()=> {    
+            pantallaInicial.style.display = "none";
+            btnMas.style.display = "block";
+            cargaTarea.style.display = "flex";
+            formContainer.style.display = "flex";
+            listaTareas.style.display = 'none';
+            descripcionTarea.style.display = 'none'
+        });
+        
+        // Evento de boton guardar tarea
+        btnGuardar.addEventListener("click", () => {    
+            const tarea = {
+                nombre: nombreTarea.value,
+                categoria: categoria.value,
+                descripcion: descripcion.value,
+            };
+            // Agrega la tarea nueva al array y carga listado
+            tareas.push(tarea);
+            cargarListado();
+            // Reiniciar valores de los campos
+            nombreTarea.value = "";
+            categoria.value = "";
+            descripcion.value = "";
+            // Muestra determinadas pantallas al clickear btn Guardar
+            pantallaInicial.style.display = "none";
+            cargaTarea.style.display = "none";
+            listaTareas.style.display = "block";
+        });
+
+        // Evento boton de cerrar formulario
+        btnCerrarFormulario.addEventListener("click", () => {
+            // Oculta el formulario y muestra la pantalla inicial
+            cargaTarea.style.display = "none";
+            pantallaInicial.style.display = "flex";
+        });
+
+        // Creo unción que asigna color a la tarjeta segun el icono de la categoria
+        const obtenerRutaIcono = (categoria)=> {
+            switch (categoria.toLowerCase()) {
+                case 'personal':
+                    return 'https://i.postimg.cc/dhtTbX4k/usuario-1.png'; 
+                case 'trabajo':
+                    return 'https://i.postimg.cc/Cz4q6YHp/portafolio-1.png';
+                case 'hogar':
+                    return 'https://i.postimg.cc/fkmXmYVL/hogar-1.png';
+                case 'finanzas':
+                    return 'https://i.postimg.cc/LnSPThPV/moneda-1.png'; 
+                default:
+                    return 'ruta_predeterminada.png';
+            }
+        }
+
+        // Genero funcion para cargar dinamicamente las tarjetas de las tareas ingresadas
+        const cargarListado = () => {
+            // Limpio el contenedor antes de volver a cargar las tareas
+            tareaContainer.innerHTML = ""; 
+            // Itero sobre el array tarea para generar cada tarea. Aplico toLowerCase para oasar a minuscula y levante el dato de la categoria para color e icono de la misma
+            // Genero la tarjeta de la tarea con el nombre, el icono de la categoria, y los botones. Aplico link para la descripcion de la tarea.
+            tareas.map((tarea, index) => {
+                tareaContainer.innerHTML += `
+                <div class="tarjetaTarea ${tarea.categoria.toLowerCase()}" data-index="${index}">
+                    <div class="detalleTarea ${tarea.categoria.toLowerCase()}">
+                        <img src="${obtenerRutaIcono(tarea.categoria)}" alt="" class="icono-categoria">
+                        <h3 id="nombreTarea"><a href="#" id="linkTarea" onclick="verDescripcion(${index})">${tarea.nombre}</a></h3> 
+                    </div>
+                    <div class="acciones">
+                        <button class="btnEliminar" onclick="eliminarTarea(${index})">
+                            <img src="https://i.postimg.cc/PJHFnNxN/eliminar-white.png" alt="">
+                        </button>
+                        <input type="checkbox" id="checkbox${index}" class="check" onchange="tareaRealizada(${index})">
+                    </div>
+                </div>`;
+            });
+        }
+
+    
+        // Funcion eliminar tarea
+        const eliminarTarea = (index) => {
+            // Utilizo confirm para mostrar un mensaje y obtener la confirmación del usuario. 
+            // Guardo la respuesta en una variable. Si es aceptar es true y sino es false
+            const confirmacion = confirm("¿Estás seguro de que quieres eliminar esta tarea?");
+            // Creo una condicion con la respuesta del confirm
+            if (confirmacion) {
+                // Elimino la tarea del array por el indice de la misma.
+                tareas.splice(index, 1); 
+                // Vuelve a cargar la lista de tareas actualizada
+                cargarListado(); 
+
+                // Verificacion de existencia de tareas para mostrar o no determinada pantalla
+                if (tareas.length === 0) {
+                    pantallaInicial.style.display = "flex";
+                    listaTareas.style.display = "none";
+                    descripcionTarea.style.display = "none"
+                    descripcionTareaContainer.style.display = "none";
+                }
+            }
+        }           
+
+        cargarListado();
+
+        // Funcion para eliminar tarea que quiera ver la descripcion
+        const eliminarTareaSeleccionada = (index) => {
+            // Utilizo confirm para mostrar un mensaje y obtener la confirmación del usuario. 
+            // Guardo la respuesta en una variable. Si es aceptar es true y sino es false
+            const confirmacion = confirm("¿Estás seguro de que quieres eliminar esta tarea?");
+            // Verifica si el usuario confirmó antes de eliminar la tarea
+            if (confirmacion) {
+                tareas.splice(index, 1); // Elimina la tarea del array
+                cargarListado(); // Vuelve a cargar la lista de tareas actualizada
+
+                // Verifica si no hay más tareas y muestra la pantalla inicial
+                if (tareas.length === 0) {
+                    pantallaInicial.style.display = "flex";
+                    listaTareas.style.display = "none";
+                    descripcionTarea.style.display = "none";
+                    descripcionTareaContainer.style.display = "none";
+                } else {
+                    // Si hay tareas restantes, muestra la lista de tareas
+                    listaTareas.style.display = "block";
+                    descripcionTarea.style.display = "none";
+                }
+            }
+        }
+        cargarListado();
+       
+       
+
+        // Funcion tachar tarea realizada
+        const tareaRealizada = (index) => {
+            // Obtengo el checkbox que disparó el evento
+            let checkbox = document.getElementById(`checkbox${index}`);
+
+            // Obtengo el elemento que contiene el nombre de la tarea asociada al checkbox
+            let linkTareaElement = checkbox.closest('.tarjetaTarea').querySelector('#linkTarea');
+
+            // Aplico el formato tachado según el estado del checkbox
+            if (checkbox.checked) {
+                linkTareaElement.classList.add('tachado');
+            } else {
+                linkTareaElement.classList.remove('tachado');
+            }
+        }
+
+        // Genero evento a cada checkbox
+        // Itero por cada checkbox y llamo el evento para correr la funcion tareaRealizada
+        checkboxes.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', () => tareaRealizada(index));
+        });
+
+        // Funcion para ver la descripcion de la tarea que se selecciona
+        const verDescripcion = (index) => {
+            // Obtengo la tarea seleccionada del array
+            const tareaSeleccionada = tareas[index];
+            const descripcionTarea = document.getElementById("descripcionTarea");
+
+            descripcionTarea.innerHTML = `
+                <div class="descripcionTareaContainer ${tareaSeleccionada.categoria.toLowerCase()}">
+                    <div class="detalleDescripcionTarea ">
+                        <img src="${obtenerRutaIcono(tareaSeleccionada.categoria)}" alt="" class="icono-categoria">
+                        <h2>${tareaSeleccionada.nombre}</h2>
+                        <h4>Descripcion</h4>
+                        <p>${tareaSeleccionada.descripcion}</p>
+                    </div>
+                    <div class="acciones">
+                        <button class="btnEliminar" onclick="eliminarTareaSeleccionada(${index})">
+                            <img src="https://i.postimg.cc/PJHFnNxN/eliminar-white.png" alt="">
+                        </button>
+                        <input type="checkbox" id="checkbox" class="check" onchange="tareaRealizada()">
+                        <button id="btnOk" onclick="okDescTarea()">OK</button>
+                    </div>
+                    <button id="btnCerrar" onclick="cerrarDescTarea()">
+                        <img src="https://i.postimg.cc/vZPBHkWQ/cerrar.png" alt="">
+                    </button>
+                </div>
+            `;
+            // Oculta la lista de tareas y muestra la información detallada
+            listaTareas.style.display = "none";
+            descripcionTarea.style.display = "block";
+        }
+
+        // Fucion de botón ok de tarea relacionada con el evento onclick 
+        const okDescTarea = () => {
+            // Verifica si no hay más tareas y muestra la pantalla inicial
+            if (tareas.length === 0) {
+                    pantallaInicial.style.display = "flex";
+                    listaTareas.style.display = "none";
+                    descripcionTarea.style.display = "none";
+                    descripcionTareaContainer.style.display = "none";
+                } else {
+                    // Si hay tareas restantes, muestra la lista de tareas
+                    listaTareas.style.display = "block";
+                    descripcionTarea.style.display = "none";
+                }
+        };
+
+        okDescTarea();
+
+        function cerrarDescTarea() {
+            // Verifica si no hay más tareas y muestra la pantalla inicial
+            if (tareas.length === 0) {
+                    pantallaInicial.style.display = "block";
+                    listaTareas.style.display = "none";
+                    descripcionTarea.style.display = "none";
+                    descripcionTareaContainer.style.display = "none";
+                } else {
+                    // Si hay tareas restantes, muestra la lista de tareas
+                    listaTareas.style.display = "block";
+                    descripcionTarea.style.display = "none";
+                }
+        };
+
+        cerrarDescTarea();
+
+
+
+                    
+    </script>
+</body>
+</html>
