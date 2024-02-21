@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reto 04 - SummerHack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barriecito&family=Pacifico&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>TO-DO App</h1>
+    </header>
+    <section id="pantallaInicial">
+        <h2>Hola! No tenes ninguna tarea</h2>
+        <p id="fraseMotivadora"></p>
+    </section>
+
+    <div class="fab">
+        <i id="btnMas">+</i>
+    </div>
+    
+     <section id="cargaTarea">
+        <div id="formContainer">
+            <label for="">Tarea:</label>
+            <input type="text" id="nombreTarea" placeholder="Ingresa la tarea">
+            <label for="">Categoria:</label>
+            <select name="categoria" id="categoria">
+                <option value="">Seleccione categoria</option>
+                <option value="personal">Personal</option>
+                <option value="trabajo">Trabajo</option>
+                <option value="hogar">Hogar</option>
+                <option value="finanzas">Finanzas</option>
+            </select>
+            <textarea id="descripcion" name="w3review" rows="4" cols="25" placeholder="Descripción de la tarea"></textarea>
+            <button id="btnGuardar">Guardar</button>
+            <button id="btnCerrarFormulario"><img src="https://i.postimg.cc/vZPBHkWQ/cerrar.png" alt=""></button>
+        </div>
+    </section>
+
+    <section id="listaTareas">
+        <div id="tareaContainer"></div>
+    </section>
+
+    <section id="descripcionTarea">
+    </section>
+
+    <footer>
+        <p>Copyright 2024 - Autora Gianni</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
